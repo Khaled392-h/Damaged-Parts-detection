@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>CarDamageDetection</title>
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+       <link rel="stylesheet" href="static/css/style.css">
+
+   </head>
+   <body>
+      <div class="container">
+         <div class="wrapper">
+            <div id="image-div" class="image">
+               <img src="" alt="">
+            </div>
+            <div class="content">
+               <div class="icon">
+                  <i class="fas fa-cloud-upload-alt"></i>
+               </div>
+               <div class="text">
+                  No file chosen, yet!
+               </div>
+            </div>
+            <div id="cancel-btn">
+               <i class="fas fa-times"></i>
+            </div>
+            <div class="file-name">
+               File name here
+            </div>
+         </div>
+
+         <button onclick="defaultBtnActive()" id="custom-btn">Choose a file</button>
+         <form method="POST" enctype="multipart/form-data" class="container" id="form1">
+         <input id="default-btn" type="file" name="file" accept=".png , .jpg , .jpeg" hidden>
+         <input type=submit value=Upload name="sb" id="custom-btn1" >
+         </form>
+      </div>
+      <a href="{{url_for('contact')}}" class="float">Contact <br> Us</a>
+      <div class="dropdown">
+      <button id="instr" onclick="myFunction()" class="float" style="top: 200px; font-size: 13px;">Instructions</button>
+      <div id="myDropdown" class="dropdown-content">
+         <ul class="list">
+             <li class="container2"><i class="material-icons" style="background: #d4d6e3; border-radius: 30px; height: 50px; width: 50px; font-size: 50px; margin-left: -500px;" >photo_camera</i> <p style="margin-top: -45px;margin-left: 60px; font-size: large;">Use a good camera</p></li>
+             <li class="container2"><i class="material-icons" style="background: #d4d6e3; border-radius: 30px; height: 50px; width: 50px; font-size: 50px; margin-left: -500px;" >wb_sunny</i> <p style="margin-top: -45px;margin-left: 60px; font-size: large;">The light in the place of taking photo should be good</p></li>
+             <li class="container2"><img src="static/images/carlens.png" alt="" width="50px" height="50px" style="background: #d4d6e3; border-radius: 30px; margin-left: -500px;"><p style="margin-top: -45px;margin-left: 60px; font-size: large;">Try to take a photo of as much as possible of car</p> </li>
+         </ul>
+       </div>
+      </div>
+      <script>
+         //location.reload();
+         window.addEventListener( "pageshow", function ( event ) {
+            var historyTraversal = event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
+                if ( historyTraversal ) {
+                    window.location.reload();
+                }
+            });
+         const wrapper = document.querySelector(".wrapper");
+         const fileName = document.querySelector(".file-name");
+         const defaultBtn = document.querySelector("#default-btn");
+         const customBtn = document.querySelector("#custom-btn");
+         const cancelBtn = document.querySelector("#cancel-btn i");
+         const img = document.querySelector("img");
+         const file = document.getElementById('default-btn');
+         let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/; // Uploaded Image Name
+         var cb = document.getElementById("custom-btn");
+         var cb1 = document.getElementById("custom-btn1");
+         var img1 = document.getElementById("image-div");
+         file.onchange = function (e){
+            var extention = this.value.match(/\.([^\.]+)$/)[1];
+            switch (extention){
+               case 'jpg':
+               case 'png':
+               case 'JPG':
+               case 'jpeg':
+               case 'JPEG':
+               case 'PNG':
+                  break;
+               default:
+                  //cancelBtn.click();
+                  this.value = '';
+                  alert('Please, Upload an Image');
+
+            }
+         }
+         function defaultBtnActive(){
+           defaultBtn.click();
+           //var img = document.getElementById("image-div");
+           //img.style.display = "block"
+         }
+         defaultBtn.addEventListener("change", function(){
+           const file = this.files[0];
+           //var cb = document.getElementById("custom-btn");
+           //var cb1 = document.getElementById("custom-btn1");
+
+           //cb.style.display = "none";
+           //cb1.style.display = "block";
+
+           if(file){
+              cb.style.display = "none";
+              cb1.style.display = "block";
+              img1.style.display = "block";
+             const reader = new FileReader();
+             reader.onload = function(){
+               const result = reader.result;
+               img.src = result;
+               wrapper.classList.add("active");
+             }
+             cancelBtn.addEventListener("click", function(){
+               img.src = "";
+               wrapper.classList.remove("active");
+               cb.style.display = "block";
+               cb1.style.display = "none";
+             })
+             reader.readAsDataURL(file);
+           }
+           if(this.value){
+             let valueStore = this.value.match(regExp);
+             fileName.textContent = valueStore;
+           }
+         });
+         function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+         $(document).ready(function(){
+            $("#instr").hover(function(){
+               document.getElementById("myDropdown").classList.toggle("show");
+            })
+         });
+
+      </script>
+   </body>
+</html>
+
+
+
+
+

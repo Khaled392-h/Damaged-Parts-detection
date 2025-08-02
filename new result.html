@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Result</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/css/style_result.css">
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+  <nav class="navbar navbar-inverse">
+    <a class="navbar-brand" href="{{url_for('a')}}">
+       <img class="imageRo" style="margin-top: -5px;" src="{{ url_for('static', filename='images/home.png') }}" width="30" height="30" alt="" >
+     </a>
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand">Car Damage Detection</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li id="c1"><a href="{{url_for('contact')}}">Contact Us</a></li>
+        <i class="fas fa-home"></i>
+      </ul>
+    </div>
+  </nav>
+
+
+
+  <div class="box_result">
+    <div class="bg_img">
+      <img src="{{url_for('download_file', name=fname)}}">
+    </div>
+    <div class="not_car">
+      {% if nc == 'false' %}
+          <table>
+            <tr>
+              <td>Not a Car </td>
+            </tr>
+            <tr>
+              <td><img class="img_table" src='/static/images/{{nc}}.jpg'></td>
+            </tr>
+          </table>
+      {% endif %}
+    </div>
+  
+    <div class="car_not_damage">
+        {% if cd == 'true' %}
+          <table>
+            <tr>
+                <td>Car</td>
+                <td>Car Damaged</td>
+                {% if dd == 'true' %}
+                {% if carPer == 0 %}
+                  <td>Position</td>
+                {% elif carPer == 1 %}
+                  <td>Position</td>
+                {% elif carPer == 2 %}
+                  <td>Position</td>
+                    {% endif %}
+
+
+            </tr>
+
+            <tr>
+              <td><img src='/static/images/{{cd}}.jpg'></td>
+              <td><img src='/static/images/{{dd}}.jpg'></td>
+            <td>{{ p }}</td>
+
+            </tr>
+
+            {% else %}
+              <tr>
+                <td><img src='/static/images/{{cd}}.jpg'></td>
+                <td><img src='/static/images/{{nd}}.jpg'></td>
+              </tr>
+              
+            {% endif %}
+          </table> 
+        {% endif %}
+    </div>
+  </div>
+</body>
+</html>
